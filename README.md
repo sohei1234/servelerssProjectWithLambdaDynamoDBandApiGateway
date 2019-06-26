@@ -1,0 +1,2 @@
+# servelerssProjectWithLambdaDynamoDBandApiGateway
+written in python 
