@@ -4,10 +4,10 @@ DynamoDBにApigatewayをとしてLamdaFunctionからDataBaseのitem管理を行�
 IAM Execution Role の作成
 
 １．IAM console log in<br>
-２．左側にあるnavigation bar からPolicyをクリック
-３．Create Policy
-４．JSONタグを選択
-５．以下を貼り付け
+２．左側にあるnavigation bar からPolicyをクリック<br>
+３．Create Policy<br>
+４．JSONタグを選択<br>
+５．以下を貼り付け<br>
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -38,33 +38,33 @@ IAM Execution Role の作成
         }
     ]
 }
-6. クリック review policy
-7. name = LambdaBackupDynamoDBPolicy
-８．Create
+6. クリック review policy<br>
+7. name = LambdaBackupDynamoDBPolicy<br>
+８．Create<br>
 
-Role をつくり今作ったpolicy をattach
+Role をつくり今作ったpolicy をattach<br>
 
-1.IAM naviagation bar から Role　を選択
-２．create roles 
-3. type of the trusted entity = AWS service
-4. the service of use = Lambda
-5. クッリク　next permmision 
-6. LambdaBackupDynamoPolicyをサーチボックスから選択
-7．next tag -> next Review
-8. name = LambdaBackupDynamoDBRole
-9. create 
+1.IAM naviagation bar から Role　を選択<br>
+２．create roles <br>
+3. type of the trusted entity = AWS service<br>
+4. the service of use = Lambda<br>
+5. クッリク　next permmision <br>
+6. LambdaBackupDynamoPolicyをサーチボックスから選択<br>
+7．next tag -> next Review<br>
+8. name = LambdaBackupDynamoDBRole<br>
+9. create <br>
 
-続いてlumbda functions の製作
+続いてlumbda functions の製作<br>
 
-１．log in Lambda console 
-2 . create function
-3 . セレクト　Author from scratch 
-4 . name = SamplePostFunction 
-5 . runtime = Python3.7
-6 . permission = choose ot create an execution role
-7 . Execusion Role = LambdaBackupDynamoDBRole
-8 . create function 
-9 . paste the following code 
+１．log in Lambda console <br>
+2 . create function<br>
+3 . セレクト　Author from scratch<br> 
+4 . name = SamplePostFunction <br>
+5 . runtime = Python3.7<br>
+6 . permission = choose ot create an execution role<br>
+7 . Execusion Role = LambdaBackupDynamoDBRole<br>
+8 . create function <br>
+9 . paste the following code<br> 
 
 import datetime
 import boto3
@@ -98,10 +98,10 @@ def lambda_handler(event, context):
     #scan_response['Items'] = sorted(scan_response['Items'], key=lambda x:x['timestamp'], reverse=True)
     return scan_response
 
-10 . save the script 
-11 . test drop down の中から　configure test events を選択
-12 . create a new test event 
-13 . paste the following JSON code 
+10 . save the script <br>
+11 . test drop down の中から　configure test events を選択<br>
+12 . create a new test event <br>
+13 . paste the following JSON code<br> 
 {
   "username": "soheiXYZ",
   "telephone": "09012402680",
@@ -109,28 +109,28 @@ def lambda_handler(event, context):
   "city": "laie",
   "street": "palekana"
 }
-14 . test 
-15 . succeed code 200を確認
-16．　dynamoDB 内に新しいitem がはいているか確認
-以上が確認できればOK
+14 . test <br>
+15 . succeed code 200を確認<br>
+16．　dynamoDB 内に新しいitem がはいているか確認<br>
+以上が確認できればOK<br>
 
-APIGatewayの作成
+APIGatewayの作成<br>
 
-1 . log in Apigateway console 
-2 . create API
-3 . choose protpcol = REST
-4 . create new API = new API
-5 . API name = 何でもOKです
-6 . 今作ったAPIを選択
-7 . Action drop button から create method を選択
-8 . drop down から POST を選択
-9 . integratioin type = lambda function 
-10 . Lambda function = SamplePostFunction
-11 . save 
-12 . integration response を選択　method execution の中にあります。
-13 . mapping template に行き　add mapping template を選択
-14 . それぞれ Multipart/form-data, application/x-www-form-urlcoded　のファイルを作成（case sentitive)
-15 . application/x-www-form-urlcodedに以下のコードを貼り付け
+1 . log in Apigateway console<br> 
+2 . create API<br>
+3 . choose protpcol = REST<br>
+4 . create new API = new API<br>
+5 . API name = 何でもOKです<br>
+6 . 今作ったAPIを選択<br>
+7 . Action drop button から create method を選択<br>
+8 . drop down から POST を選択<br>
+9 . integratioin type = lambda function<br> 
+10 . Lambda function = SamplePostFunction<br>
+11 . save <br>
+12 . integration response を選択　method execution の中にあります。<br>
+13 . mapping template に行き　add mapping template を選択<br>
+14 . それぞれ Multipart/form-data, application/x-www-form-urlcoded　のファイルを作成（case sentitive)<br>
+15 . application/x-www-form-urlcodedに以下のコードを貼り付け<br>
 {
 #set( $tmpstr = $input.body )
 #foreach( $keyandvaluestr in $tmpstr.split( '&' ) )
@@ -138,8 +138,8 @@ APIGatewayの作成
         "$keyandvaluearray[0]" : "$keyandvaluearray[1]"
 #end
 }
-16 . method execution に戻り　test をクリック
-17 . copy and paste the following code request body の中に入れてください
+16 . method execution に戻り　test をクリック<br>
+17 . copy and paste the following code request body の中に入れてください<br>
 {
   "username": "soheiXYZ",
   "telephone": "09012402680",
@@ -147,16 +147,16 @@ APIGatewayの作成
   "city": "laie",
   "street": "palekana"
 }
-18 . status code が　２００であるのを確認
-19 . Action drop button から　deploy を選択
-20 . base = 何でもOK
+18 . status code が　２００であるのを確認<br>
+19 . Action drop button から　deploy を選択<br>
+20 . base = 何でもOK<br>
 
-他のmethod (delete, get, patch)はほぼ同じように作れます以下は違うところだけ手順を載せます
-手順の12までは同じです
-12 . integration request に行く
-13 . mapping template 
-14 . template name = application/json
-15 . copy and paster the following code 
+他のmethod (delete, get, patch)はほぼ同じように作れます以下は違うところだけ手順を載せます<br>
+手順の12までは同じです<br>
+12 . integration request に行く<br>
+13 . mapping template <br>
+14 . template name = application/json<br>
+15 . copy and paster the following code <br>
 {
     "username": "$input.params("username")",
     "street":  "$input.params("street")",
@@ -164,13 +164,13 @@ APIGatewayの作成
     "telephone": "$input.params("telephone")",
     "country": "$input.params("country")"
 }
-16 . tset 
-17 . body request ではなく query string に username = sohei&street= laieなどを入力
+16 . tset <br>
+17 . body request ではなく query string に username = sohei&street= laieなどを入力<br>
 
-最終テスト
-1 . RESTlet などのRESTAPI　test tool を用意
-2 . Deploy で付与されたURLをコピペ
-3 . sample body に以下をコピー
+最終テスト<br>
+1 . RESTlet などのRESTAPI　test tool を用意<br>
+2 . Deploy で付与されたURLをコピペ<br>
+3 . sample body に以下をコピー<br>
 {
   "username": "soheiXYZ",
   "telephone": "09012402680",
@@ -178,7 +178,7 @@ APIGatewayの作成
   "city": "laie",
   "street": "palekana"
 }
-4 . status 200 を確認
+4 . status 200 を確認<br>
 
 
 
