@@ -3,7 +3,7 @@ DynamoDBにApigatewayをとしてLamdaFunctionからDataBaseのitem管理を行�
 
 IAM Execution Role の作成
 
-１．IAM console log in
+１．IAM console log in<br>
 ２．左側にあるnavigation bar からPolicyをクリック
 ３．Create Policy
 ４．JSONタグを選択
