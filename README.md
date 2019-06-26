@@ -8,36 +8,36 @@ IAM Execution Role の作成
 ３．Create Policy<br>
 ４．JSONタグを選択<br>
 ５．以下を貼り付け<br>
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogStream",
-                "dynamodb:*",
-                "logs:PutLogEvents",
-                "dynamodb:DeleteBackup"
-            ],
-            "Resource": "*"
-        },
-        {
-            "Sid": "VisualEditor1",
-            "Effect": "Allow",
-            "Action": "logs:CreateLogGroup",
-            "Resource": "*"
-        },
-        {
-            "Sid": "Invoke",
-            "Effect": "Allow",
-            "Action": [
-                "lambda:InvokeFunction"
-            ],
-            "Resource": "arn:aws:lambda:ap-northeast-1:731647903955:function:SamplePostFunction"
-        }
-    ]
-}
+{<br>
+    "Version": "2012-10-17",<br>
+    "Statement": [<br>
+        {<br>
+            "Sid": "VisualEditor0",<br>
+            "Effect": "Allow",<br>
+            "Action": [<br>
+                "logs:CreateLogStream",<br>
+                "dynamodb:*",<br>
+                "logs:PutLogEvents",<br>
+                "dynamodb:DeleteBackup"<br>
+            ],<br>
+            "Resource": "*"<br>
+        },<br>
+        {<br>
+            "Sid": "VisualEditor1",<br>
+            "Effect": "Allow",<br>
+            "Action": "logs:CreateLogGroup",<br>
+            "Resource": "*"<br>
+        },<br>
+        {<br>
+            "Sid": "Invoke",<br>
+            "Effect": "Allow",<br>
+            "Action": [<br>
+                "lambda:InvokeFunction"<br>
+            ],<br>
+            "Resource": "arn:aws:lambda:ap-northeast-1:731647903955:function:SamplePostFunction"<br>
+        }<br>
+    ]<br>
+}<br>
 6. クリック review policy<br>
 7. name = LambdaBackupDynamoDBPolicy<br>
 ８．Create<br>
@@ -102,13 +102,13 @@ def lambda_handler(event, context):
 11 . test drop down の中から　configure test events を選択<br>
 12 . create a new test event <br>
 13 . paste the following JSON code<br> 
-{
-  "username": "soheiXYZ",
-  "telephone": "09012402680",
-  "country": "japan",
-  "city": "laie",
-  "street": "palekana"
-}
+{<br>
+  "username": "soheiXYZ",<br>
+  "telephone": "09012402680",<br>
+  "country": "japan",<br>
+  "city": "laie",<br>
+  "street": "palekana"<br>
+}<br>
 14 . test <br>
 15 . succeed code 200を確認<br>
 16．　dynamoDB 内に新しいitem がはいているか確認<br>
@@ -140,13 +140,13 @@ APIGatewayの作成<br>
 }
 16 . method execution に戻り　test をクリック<br>
 17 . copy and paste the following code request body の中に入れてください<br>
-{
-  "username": "soheiXYZ",
-  "telephone": "09012402680",
-  "country": "japan",
-  "city": "laie",
-  "street": "palekana"
-}
+{<br>
+  "username": "soheiXYZ",<br>
+  "telephone": "09012402680",<br>
+  "country": "japan",<br>
+  "city": "laie",<br>
+  "street": "palekana"<br>
+}<br>
 18 . status code が　２００であるのを確認<br>
 19 . Action drop button から　deploy を選択<br>
 20 . base = 何でもOK<br>
@@ -157,13 +157,13 @@ APIGatewayの作成<br>
 13 . mapping template <br>
 14 . template name = application/json<br>
 15 . copy and paster the following code <br>
-{
-    "username": "$input.params("username")",
-    "street":  "$input.params("street")",
-    "city": "$input.params("city")",
-    "telephone": "$input.params("telephone")",
-    "country": "$input.params("country")"
-}
+{<br>
+  "username": "soheiXYZ",<br>
+  "telephone": "09012402680",<br>
+  "country": "japan",<br>
+  "city": "laie",<br>
+  "street": "palekana"<br>
+}<br>
 16 . tset <br>
 17 . body request ではなく query string に username = sohei&street= laieなどを入力<br>
 
@@ -171,13 +171,13 @@ APIGatewayの作成<br>
 1 . RESTlet などのRESTAPI　test tool を用意<br>
 2 . Deploy で付与されたURLをコピペ<br>
 3 . sample body に以下をコピー<br>
-{
-  "username": "soheiXYZ",
-  "telephone": "09012402680",
-  "country": "japan",
-  "city": "laie",
-  "street": "palekana"
-}
+{<br>
+  "username": "soheiXYZ",<br>
+  "telephone": "09012402680",<br>
+  "country": "japan",<br>
+  "city": "laie",<br>
+  "street": "palekana"<br>
+}<br>
 4 . status 200 を確認<br>
 
 
